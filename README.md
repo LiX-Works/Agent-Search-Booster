@@ -13,6 +13,8 @@ It focuses on two capabilities:
 
 The current entry point is Codex. The homepage is bilingual; the Skill's invocation guides are in Chinese.
 
+The agent chooses routes by the task and the missing content. **Interactive, signed-in, or verification pages bring OpenCLI / browser reading to the front**, including ordinary university and laboratory sites. Academic discovery and official article PDF downloads go to the corresponding installed Skills; converting an existing PDF is a separate step. A failed fetch is reported with its attempted route and remaining gap, rather than treated as proof that every route is unavailable.
+
 ## Using it
 
 1. Copy the entire `skills/agent-search-booster/` folder into your personal `~/.agents/skills/` directory or the project's `.agents/skills/` directory. Compare existing customizations before replacing it. See the [official Skill guide](https://learn.chatgpt.com/docs/build-skills).
@@ -46,7 +48,7 @@ This is the complete component list integrated by this setup, for checking readi
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|
-| OpenCLI | Local CLI | [Project / docs](https://github.com/jackwener/OpenCLI) | Platform search, posts, comments, transcripts, and browser reading | Browser commands need Chrome, Bridge, and site sessions |
+| OpenCLI | Local CLI | [Project / docs](https://github.com/jackwener/OpenCLI) | Browser reading for ordinary sites and platforms; dynamic and verification pages, posts, comments, transcripts | Generic web/browser routes need Chrome, Bridge, and any required authorized session; access is not guaranteed |
 | Browser Bridge | Chrome extension | [Project / docs](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | Connect OpenCLI to the browser | Install and enable alongside OpenCLI |
 | GitHub CLI | Local CLI | [Project / docs](https://cli.github.com/) | Read repositories, code, issues, PRs, and releases | Command: gh; authentication scope depends on the task |
 | Grok Build | CLI / auxiliary agent | [Project / docs](https://docs.x.ai/build/overview) | Research X posts, threads, and related web sources | Command: grok; sign-in and account allowance required |
@@ -77,7 +79,7 @@ This is the complete component list integrated by this setup, for checking readi
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|
-| AGY / Gemini | CLI / auxiliary agent | [Project / docs](https://www.antigravity.google/docs/cli/overview) | Analyze batches of retrieved material | Optional collaboration; independent environment and sign-in |
+| AGY / Gemini | CLI / auxiliary agent | [Project / docs](https://www.antigravity.google/docs/cli/overview) | Video and related frame analysis | Follow subagent-manager's specialist rules; other roles require an explicit user request |
 | subagent-manager | Companion Skill | [Project / docs](https://github.com/LiX-Works/subagent-manager) | Manage delegated models, handoffs, and Grok usage | Optional coordination rules; search can run independently |
 
 ## Agent invocation guides

@@ -1,5 +1,5 @@
 interface:
   display_name: "Agent Search Booster"
-  short_description: "一站式调度搜索、平台和正文工具，扩大来源覆盖并读取更完整内容"
+  short_description: "按任务分流搜索与读取，处理动态及验证页面，衔接学术检索和官方PDF下载"
 policy:
   allow_implicit_invocation: true

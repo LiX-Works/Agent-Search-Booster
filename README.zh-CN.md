@@ -13,6 +13,8 @@
 
 目前以 Codex 为使用入口。首页中英双语，Skill 调用说明为中文。
 
+Agent按任务和缺失材料分流。**遇到动态加载、登录态或验证页面时，优先考虑OpenCLI／浏览器读取**，也适用于普通高校和实验室网站。学术检索、官方论文PDF下载交给相应的已安装Skill；已有PDF的转换是另一阶段。某个入口失败时，记录实际尝试和剩余缺口，不直接判定所有路线都不可用。
+
 ## 怎么用
 
 1. 将 `skills/agent-search-booster/` 整个文件夹放入个人 `~/.agents/skills/` 或项目 `.agents/skills/`。已有同名目录先比较个人改动。[官方 Skill 说明](https://learn.chatgpt.com/docs/build-skills)
@@ -45,7 +47,7 @@
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
-| OpenCLI | 本地 CLI | [项目 / 文档](https://github.com/jackwener/OpenCLI) | 站内搜索、帖子、评论、字幕和浏览器读取 | 浏览器类命令依赖 Chrome、Bridge 与站点会话 |
+| OpenCLI | 本地 CLI | [项目 / 文档](https://github.com/jackwener/OpenCLI) | 普通网站与平台的浏览器读取；动态/验证页面、帖子、评论、字幕 | 通用web/browser入口需Chrome、Bridge及必要的授权会话；不保证解除访问限制 |
 | Browser Bridge | Chrome 扩展 | [项目 / 文档](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | 连接 OpenCLI 与浏览器 | 需安装并启用；与 OpenCLI 配套 |
 | GitHub CLI | 本地 CLI | [项目 / 文档](https://cli.github.com/) | 读取仓库、代码、Issue、PR 与发布资料 | 命令 gh；认证范围按任务与账户 |
 | Grok Build | CLI / 辅助 Agent | [项目 / 文档](https://docs.x.ai/build/overview) | X 原帖、讨论串与补充网页研究 | 命令 grok；登录及账户额度需确认 |
@@ -76,7 +78,7 @@
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
-| AGY / Gemini | CLI / 辅助 Agent | [项目 / 文档](https://www.antigravity.google/docs/cli/overview) | 分析已经取得的批量材料 | 补充协作；独立工具环境，需登录 |
+| AGY / Gemini | CLI / 辅助 Agent | [项目 / 文档](https://www.antigravity.google/docs/cli/overview) | 视频与相关帧分析 | 按subagent-manager专项规则；其他职责仅按用户明确请求 |
 | subagent-manager | 配套 Skill | [项目 / 文档](https://github.com/LiX-Works/subagent-manager) | 管理子代理模型、交接和 Grok 额度 | 协作规则可衔接；不影响主搜索入口 |
 
 ## Agent 调用说明

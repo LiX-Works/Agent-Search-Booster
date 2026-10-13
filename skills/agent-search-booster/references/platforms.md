@@ -1,6 +1,26 @@
-# 平台搜索、正文、评论与浏览器调用
+# 浏览器读取、平台正文与评论
 
 面向Agent。OpenCLI负责把站内操作转成CLI，Browser Bridge连接浏览器和已有平台会话；直接浏览器可补足适配器未提供的页面内容。平台适配器支持范围随版本改变，先查目标帮助。
+
+## 核心读取路线
+
+动态加载、授权登录态、验证页、展开或分页问题应尽早考虑真实浏览器，不必先试完所有普通抓取工具。OpenCLI也有通用网页入口，适用于没有平台适配器的高校、实验室等网站。公开静态页已读完整时，普通web/正文工具即可。远程MCP是否暴露不决定本地OpenCLI是否可用。
+
+先检查本机对应帮助；以下命令应在当前版本支持时使用：
+
+```powershell
+opencli web read --help
+opencli web read --url 'https://example.org/page' --stdout true --download-images false --window background
+opencli browser faculty-research open 'https://example.org/page' --window background
+opencli browser faculty-research state
+opencli browser faculty-research extract --chunk-size 12000
+```
+
+多步流程复用同一命名会话并协调所有权。分块正文按返回的`next_start_char`继续`extract --start ...`，直到为`null`；这不证明页面分页或折叠内容读全。使用实际页面返回的操作标识，不猜按钮。
+
+OpenCLI使用正常Chrome与现有会话，**不保证解决所有验证码、登录或权限限制**。必要时等待正常验证或让用户完成所需操作；不提取Cookie来冒充恢复。导航成功、登录成功和抽取成功均需进一步核对目标正文、条目、分页及截断。论文官方PDF仍交`download-official-pdfs`；网页Markdown或截图不是有效PDF下载。
+
+参考：[上游README](https://github.com/jackwener/OpenCLI)、[浏览器调用说明](https://github.com/jackwener/OpenCLI/blob/main/skills/opencli-browser/SKILL.md)。本机缺少通用入口时使用当前可用浏览器并说明缺项，不宣称所有浏览器路线均已失败。
 
 ## 发现与连接
 

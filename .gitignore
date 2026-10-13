@@ -4,3 +4,7 @@ __pycache__/
 .env
 .env.*
 !*.example
+auth.json
+cookies.txt
+cookies.json
+*.har

@@ -1,6 +1,8 @@
 # 工具组合与依赖对照
 
-用于检查本Skill整合的组件是否准备好。用户依此确认安装/连接，任务执行中的工具组合由Agent负责。工具分类采用本方案的接入方式；同一项目可能还提供其他运行方式。备注中的备选、补充和协作项不重复安装，也不把历史接通情况当作当前用户环境可用。
+清单按接入类型组织，不是调用优先级。专用任务先用对应Skill；动态/登录/验证页面优先考虑OpenCLI与浏览器。获取论文官方PDF交`download-official-pdfs`，本地转换工具只处理已取得的文件。
+
+用于检查本Skill整合的组件是否准备好。Agent按任务检查将要使用的入口；用户也可用此清单提前准备，但逐项预先确认不是开始任务的条件。工具组合由Agent负责。工具分类采用本方案的接入方式；同一项目可能还提供其他运行方式。备注中的备选、补充和协作项不重复安装，也不把历史接通情况当作当前用户环境可用。
 
 ### 网页与 MCP
 
@@ -17,7 +19,7 @@
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
-| OpenCLI | 本地 CLI | [项目 / 文档](https://github.com/jackwener/OpenCLI) | 站内搜索、帖子、评论、字幕和浏览器读取 | 浏览器类命令依赖 Chrome、Bridge 与站点会话 |
+| OpenCLI | 本地 CLI | [项目 / 文档](https://github.com/jackwener/OpenCLI) | 普通网站与平台的真实浏览器读取；动态/登录/验证页面、帖子、评论、字幕 | 支持通用web/browser入口；需Chrome、Bridge及必要的授权会话，不保证解除访问限制 |
 | Browser Bridge | Chrome 扩展 | [项目 / 文档](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | 连接 OpenCLI 与浏览器 | 需安装并启用；与 OpenCLI 配套 |
 | GitHub CLI | 本地 CLI | [项目 / 文档](https://cli.github.com/) | 读取仓库、代码、Issue、PR 与发布资料 | 命令 gh；认证范围按任务与账户 |
 | Grok Build | CLI / 辅助 Agent | [项目 / 文档](https://docs.x.ai/build/overview) | X 原帖、讨论串与补充网页研究 | 命令 grok；登录及账户额度需确认 |
@@ -48,7 +50,7 @@
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
-| AGY / Gemini | CLI / 辅助 Agent | [项目 / 文档](https://www.antigravity.google/docs/cli/overview) | 分析已经取得的批量材料 | 补充协作；独立工具环境，需登录 |
+| AGY / Gemini | CLI / 辅助 Agent | [项目 / 文档](https://www.antigravity.google/docs/cli/overview) | 视频与相关帧分析 | 按subagent-manager专项规则或用户明确请求；不默认处理普通批量文字 |
 | subagent-manager | 配套 Skill | [项目 / 文档](https://github.com/LiX-Works/subagent-manager) | 管理子代理模型、交接和 Grok 额度 | 协作规则可衔接；不影响主搜索入口 |
 
 ## Agent检查方法
