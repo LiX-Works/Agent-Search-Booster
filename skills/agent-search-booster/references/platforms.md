@@ -1,12 +1,12 @@
-# 浏览器读取、平台正文与评论
+# Browser reading, platform text, and comments
 
-面向Agent。OpenCLI负责把站内操作转成CLI，Browser Bridge连接浏览器和已有平台会话；直接浏览器可补足适配器未提供的页面内容。平台适配器支持范围随版本改变，先查目标帮助。
+For agents. OpenCLI turns site operations into CLI calls; Browser Bridge connects the browser and existing platform sessions. Direct browser use can cover page content unavailable through adapters. Platform-adapter coverage changes with versions, so check the relevant help first.
 
-## 核心读取路线
+## Core reading route
 
-动态加载、授权登录态、验证页、展开或分页问题应尽早考虑真实浏览器，不必先试完所有普通抓取工具。OpenCLI也有通用网页入口，适用于没有平台适配器的高校、实验室等网站。公开静态页已读完整时，普通web/正文工具即可。远程MCP是否暴露不决定本地OpenCLI是否可用。
+Consider a real browser early for dynamic loading, authorized login sessions, verification screens, expansion, or pagination. There is no need to exhaust every ordinary scraper first. OpenCLI also provides generic web entry points for sites such as universities and laboratories without platform adapters. Ordinary web/text tools suffice when a public static page has already been read completely. Remote MCP exposure does not determine local OpenCLI availability.
 
-先检查本机对应帮助；以下命令应在当前版本支持时使用：
+Check the corresponding local help first. Use these commands when supported by the current version:
 
 ```powershell
 opencli web read --help
@@ -16,13 +16,13 @@ opencli browser faculty-research state
 opencli browser faculty-research extract --chunk-size 12000
 ```
 
-多步流程复用同一命名会话并协调所有权。分块正文按返回的`next_start_char`继续`extract --start ...`，直到为`null`；这不证明页面分页或折叠内容读全。使用实际页面返回的操作标识，不猜按钮。
+Reuse the same named session across multiple steps and coordinate ownership. Continue chunked extraction using the returned `next_start_char` with `extract --start ...` until it is `null`; this does not prove that page pagination or collapsed content has been fully read. Use action identifiers returned by the actual page instead of guessing buttons.
 
-OpenCLI使用正常Chrome与现有会话，**不保证解决所有验证码、登录或权限限制**。必要时等待正常验证或让用户完成所需操作；不提取Cookie来冒充恢复。导航成功、登录成功和抽取成功均需进一步核对目标正文、条目、分页及截断。论文官方PDF仍交`download-official-pdfs`；网页Markdown或截图不是有效PDF下载。
+OpenCLI uses normal Chrome and existing sessions. **It does not guarantee resolution of every CAPTCHA, login, or permission restriction.** Wait for normal verification or have the user complete required actions when necessary. Do not extract cookies as a supposed recovery method. After navigation, login, or extraction succeeds, still verify target text, entries, pagination, and truncation. Official article PDFs remain the responsibility of `download-official-pdfs`; page Markdown or a screenshot is not a valid PDF download.
 
-参考：[上游README](https://github.com/jackwener/OpenCLI)、[浏览器调用说明](https://github.com/jackwener/OpenCLI/blob/main/skills/opencli-browser/SKILL.md)。本机缺少通用入口时使用当前可用浏览器并说明缺项，不宣称所有浏览器路线均已失败。
+References: [upstream README](https://github.com/jackwener/OpenCLI), [browser invocation guide](https://github.com/jackwener/OpenCLI/blob/main/skills/opencli-browser/SKILL.md). If the local generic entry point is absent, use the currently available browser and state the missing component; do not claim all browser routes have failed.
 
-## 发现与连接
+## Discovery and connection
 
 ```powershell
 opencli list
@@ -32,40 +32,40 @@ opencli reddit read --help
 opencli youtube transcript --help
 ```
 
-doctor只检查桥接连接，不证明目标平台已登录或全文已取得。使用者实际安装的扩展和浏览器配置为准，不预设作者的Chrome配置名、安装路径或账号。需要启动浏览器时复用用户已授权配置，避免扰动现有窗口和其他Agent任务。
+`doctor` checks bridge connectivity only; it does not prove platform login or full-text retrieval. Use the extension and browser profile actually installed by the user, without assuming the author's Chrome profile name, installation path, or account. When browser launch is needed, reuse the user's authorized profile and avoid disrupting existing windows or other agents' tasks.
 
-## 按场景取得材料
+## Obtain material by scenario
 
-| 场景 | 方法 | 继续读取什么 |
+| Scenario | Method | Continue reading |
 |---|---|---|
-| 小红书笔记 | search后取得工具返回的页面链接，note读正文 | comments与必要子回复；图片/视频内容需按任务单独理解 |
-| Reddit | search选中帖子，再read | 调整limit/depth/replies/max-length与more展开，核对截断 |
-| YouTube | search找到目标，再transcript | 语言轨道与时间段；评论用对应comments子命令 |
-| 知乎、微信公众号、V2EX等 | 使用当前列表中的站内搜索/详情，或已授权浏览器 | 正文、分页和相关回复，标题列表不代替内容 |
-| X | Grok CLI追原帖/线程；浏览器补充核对 | 作者、日期、上下文、重要回复与引用，见[Grok](grok.md) |
+| Xiaohongshu notes | Use the page link returned by `search`, then read text with `note` | `comments` and relevant child replies; interpret image/video content separately as needed |
+| Reddit | Select a post with `search`, then `read` | Adjust `limit`/`depth`/`replies`/`max-length` and `more` expansion; check truncation |
+| YouTube | Find the target with `search`, then `transcript` | Language tracks and time ranges; use the corresponding `comments` subcommand for comments |
+| Zhihu, WeChat Official Accounts, V2EX, and similar sites | Use available site-search/detail commands or an authorized browser | Text, pagination, and relevant replies; title lists do not replace content |
+| X | Follow original posts/threads with Grok CLI; supplement checks in the browser | Authors, dates, context, important replies, and quotes; see [Grok](grok.md) |
 
-调用示例（参数以当前help为准，不是固定结果数）：
+Invocation examples (parameters follow current help; these are not fixed result counts):
 
 ```powershell
-opencli xiaohongshu search '主题' --limit 5 --window background -f json
-opencli reddit search '主题' --limit 5 --window background -f json
+opencli xiaohongshu search 'topic' --limit 5 --window background -f json
+opencli reddit search 'topic' --limit 5 --window background -f json
 opencli reddit read 'POST_ID_OR_URL' --limit 50 --depth 3 --replies 10 --max-length 5000 --expand-more true --window background -f json
 opencli youtube transcript 'VIDEO_URL' --lang en --mode raw --window background -f json
 ```
 
-小红书note/comments可能需要带页面签名的原始链接。仅使用现有工具/浏览器提供的授权链接完成调用，不在公开报告保存签名、token或账号信息；输出规范化来源链接。缺少必要凭据访问授权时先说明范围并询问。
+Xiaohongshu `note`/`comments` may require the original link with its page signature. Invoke only with authorized links supplied by existing tools/browser sessions. Do not save signatures, tokens, or account details in public reports; output normalized source links. If authorization for necessary credential access is missing, explain the scope and ask first.
 
-## 完整内容与覆盖
+## Full content and coverage
 
-“完整评论”应检查根评论、子回复、分页终点与返回截断。平台总数可能包含删除、折叠或不可见项；不能仅把limit设很大就宣称读全。保留实际读到的范围和缺项原因。
+For "all comments," check root comments, child replies, pagination endpoints, and returned truncation. Platform totals may include deleted, collapsed, or invisible items. A large `limit` alone does not justify claiming complete coverage. Report what was actually read and why material is missing.
 
-现成字幕为空时先看轨道、语言与适配器错误；必要时用另一个正常入口确认。额外转录/ASR按具体任务价值和授权决定，不将一个视频项目的规则套到所有平台。
+When an existing transcript is empty, first check tracks, languages, and adapter errors; confirm through another normal entry point when needed. Decide on additional transcription/ASR according to the specific task's value and authorization. Do not apply one video project's rules to every platform.
 
-## 连接异常
+## Connection errors
 
-- Extension not connected：确认扩展启用、目标浏览器配置及桥接；不把重新网页登录当唯一修复。
-- Navigation rejected：检查页面与桥接状态，有限重试或换浏览器；不复制作者旧版本补丁为通用修复。
-- HTML代替结构化结果或登录页：确认目标材料尚未取得，恢复授权会话或选正常可访问入口。
-- 不让多个Agent未经协调操纵同一浏览器会话；不关闭无关用户标签页。
+- `Extension not connected`: Check extension enablement, the target browser profile, and the bridge. Repeating website login is not the only recovery method.
+- `Navigation rejected`: Check page and bridge state, retry within bounds, or use another browser. Do not copy the author's old-version patches as universal fixes.
+- HTML instead of structured results, or a login page: Confirm the target material has not yet been obtained, restore the authorized session, or choose a normally accessible route.
+- Do not let multiple agents manipulate one browser session without coordination; do not close unrelated user tabs.
 
-Agent-Reach用于已接通渠道的辅助与管理，不是OpenCLI的别名。读对应help后使用；完整doctor/setup可能探测认证或安装额外程序，先核对行为与当前授权。本文不以Agent-Reach默认执行凭据提取、ASR或新增收费API。
+Agent-Reach supports and manages connected channels; it is not an alias for OpenCLI. Read the relevant help before use. A full `doctor`/`setup` may inspect authentication or install additional programs, so check behavior and current authorization first. This reference does not make credential extraction, ASR, or new paid APIs the default behavior of Agent-Reach.

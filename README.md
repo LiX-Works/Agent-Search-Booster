@@ -2,18 +2,20 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-**Prepare the tools, then use one Skill to extend your agent's search and content retrieval.**
+**A Skill that gives AI agents the power to search across the web, scrape hard-to-reach pages, and read original content—from articles and documentation to posts, comments, and video transcripts.**
 
-This project brings together the roles and invocation methods for web search, page extraction, platform readers, and local document tools. You provide the task; the agent uses the tools appropriate to it.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/search-booster-overview.png">
+  <img src="assets/search-booster-overview.png" alt="AI Agent connects through search, platform, web-text, code-documentation, and document tools to representative sources." width="1600">
+</picture>
 
-It focuses on two capabilities:
+- **Broader search coverage:** reach original posts, discussions, specialist sources, and documentation that ordinary search can miss.
+- **More complete content:** continue from links and snippets into page text, comment replies, transcripts, and file content.
 
-- **Broader search coverage:** reach platform content, original posts, discussions, and specialist sources that ordinary search can miss.
-- **Deeper content retrieval:** follow links and snippets into page text, comment replies, transcripts, and document content for analysis.
+The agent checks the routes relevant to the task, uses the tools it needs, and reports what it obtained and what remains missing. You provide the objective; you do not need to choose a tool or remember its commands for every step.
 
-The current entry point is Codex. The homepage is bilingual; the Skill's invocation guides are in Chinese.
-
-The agent chooses routes by the task and the missing content. **Interactive, signed-in, or verification pages bring OpenCLI / browser reading to the front**, including ordinary university and laboratory sites. Academic discovery and official article PDF downloads go to the corresponding installed Skills; converting an existing PDF is a separate step. A failed fetch is reported with its attempted route and remaining gap, rather than treated as proof that every route is unavailable.
+Built for Codex. This README is available in English and Chinese; the Skill and its invocation guides are in English. The agent replies in your preferred language.
 
 ## Using it
 
@@ -28,6 +30,13 @@ Add sources from other platforms as useful, then summarize the findings.
 ```
 
 Once the tools are ready, you provide the objective and scope. The detailed invocation guides are for the agent to read as needed.
+
+## How the agent chooses a route
+
+- **Search and discovery:** combine sources according to the question and the material still needed.
+- **Pages and platforms:** consider OpenCLI or browser reading early for interactive, signed-in, dynamically loaded, or verification pages, including ordinary university and laboratory sites. Authorized access and the site's behavior determine what can be read.
+- **Specialist tasks:** hand academic discovery and official article PDF downloads to the corresponding installed Skills. Reading or converting a PDF already obtained is a separate step.
+- **Retrieval gaps:** distinguish a route not tried, a missing dependency, and an actual reading failure; check the material returned and report its coverage.
 
 ## Tool checklist
 

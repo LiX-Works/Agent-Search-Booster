@@ -1,10 +1,10 @@
-# Grok CLI：X与补充研究
+# Grok CLI: X and supplementary research
 
-面向Agent。已安装并通过免费/订阅入口登录的Grok Build CLI，作为资料检索辅助Agent。搜索增强能帮助任务时非常鼓励调用，重点发挥X原帖、线程、时间线及多方观点的能力，也可处理有价值的网页研究；不把其他模型的最终总结直接当来源。
+For agents. Use the installed Grok Build CLI, signed in through authorized free/subscription access, as a research assistant. Strongly encourage invocation when search enhancement helps the task, particularly original X posts, threads, timelines, and multiple viewpoints. Useful web research is also appropriate. Do not treat another model's final summary as a source.
 
-## 调用
+## Invocation
 
-先核对当前帮助和模型列表，选择实际可用模型与思考档位，不永久锁在旧版本：
+Check current help and model lists first. Choose an actually available model and reasoning tier rather than permanently pinning an old version:
 
 ```powershell
 grok --help
@@ -12,18 +12,18 @@ grok models
 grok --model MODEL_ID --reasoning-effort high --prompt-file 'x-task.txt' --permission-mode plan --no-subagents --output-format streaming-json
 ```
 
-在独立任务目录写UTF-8任务提示；传主题、时间范围、对象、要回答的问题及需要的原帖/回复，要求返回原链接、作者、时间、观点依据与未取得部分。根据实际进度设置外层超时，短暂排队不等于失败。
+Write a UTF-8 task prompt in a separate task directory. Provide the topic, time range, subjects, questions, and required original posts/replies. Request original links, authors, dates, evidence for claims, and material not obtained. Set the outer timeout according to actual progress; a short queue wait is not a failure.
 
-X任务不要套用只允许web_search的普通网页例子，否则可能只有WebSearch。核对实际工具事件与返回链接是否包含X原帖/线程内容。CLI显示的工具名称、参数与可用范围以当前版本为准；未知工具名不能当限制已经生效。
+For X tasks, do not reuse an ordinary web example that permits only `web_search`, as it may yield only WebSearch. Check actual tool events and returned links for original X post/thread content. Tool names, parameters, and availability depend on the current CLI version; an unknown tool name does not prove a restriction took effect.
 
-示例任务内容：
+Example task:
 
-> 搜索X上过去一周关于该产品的实际使用讨论，追到原帖、线程和重要回复。区分官方发布、作者实测与转述，寻找反例。保留原帖链接与日期，说明未能读到的内容。
+> Find real usage discussions about this product on X from the past week, following original posts, threads, and important replies. Distinguish official announcements, authors' direct tests, and secondhand reports. Look for counterexamples. Preserve original links and dates, and explain what could not be read.
 
-## 结果与额度
+## Results and usage
 
-Codex对关键原帖和事实继续核对。允许同主题定向追问，不为凑调用反复搜同一材料。额度提醒采用单日消耗整周额度超过30%仅提醒的默认，不中断任务、不限制新派；查询默认合并5个有效研究单元，小操作和同题追问合并计数。阈值与查询频率可按自己的使用情况调整。
+Codex continues to verify key original posts and facts. Focused follow-up questions on the same topic are allowed; do not repeatedly search the same material to increase invocation counts. The default usage policy gives an advisory reminder when daily consumption exceeds 30% of the full weekly allowance. It does not interrupt work or restrict new assignments. By default, query usage after five substantive research units, combining small operations and follow-ups on the same question. Adapt thresholds and query frequency to your own usage when appropriate.
 
-Grok交互终端的/usage用于账户周用量及重置时间；grok usage SESSION_ID用于会话Token/成本。两者不能混为剩余额度。没有可信账户数据时保留未知，不依赖模型自述。只用当前已授权免费/套餐额度，不转按量API或自动充值。
+The interactive Grok terminal's `/usage` reports account weekly usage and reset time; `grok usage SESSION_ID` reports session tokens/cost. Do not confuse either with remaining allowance. Keep account capacity unknown without reliable account data; do not rely on a model's self-report. Use only currently authorized free/plan-included capacity, without switching to metered APIs or automatic recharge.
 
-若同时安装subagent-manager，按其Grok调用与额度规则执行；未安装也可依本文运行，不强制安装另一Skill。权限模式与提示只读要求不等于OS级沙箱；不启用自动批准或权限绕过，也不把搜索任务交给无限子代理。
+When `subagent-manager` is also installed, follow its Grok invocation and usage rules. Otherwise, this reference can be used independently; installing another Skill is not required. Permission modes and read-only prompts are not OS-level sandboxes. Do not enable automatic approval or permission bypasses, or delegate search to unbounded subagents.

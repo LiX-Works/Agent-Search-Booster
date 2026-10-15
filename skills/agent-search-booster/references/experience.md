@@ -1,12 +1,12 @@
-# 经验与迭代
+# Experience and iteration
 
-记录有复用价值的方法、故障、覆盖缺口与调整依据。可在使用者授权范围内更新，不自动把单次结果改成永久规则。
+Record reusable methods, failures, coverage gaps, and the reasons for adjustments. Updates must stay within the user's authorization; do not automatically turn a single outcome into a permanent rule.
 
-建议记录：日期、任务/版本、实际操作、观察或已复现结果、来源与未决条件。不要保存账号、凭据、私人原文或内部思考。
+Suggested fields: date, task/version, actual actions, observations or reproduced results, sources, and unresolved conditions. Do not store accounts, credentials, private source text, or internal reasoning.
 
-- 新增能力要用真实搜索/读取结果验收，配置存在、登录成功和模型小答题不够。
-- 同一服务的插件与独立MCP分别验证；同一工具的网页搜索与平台详情/完整评论分别判断。
-- 可将过时经验归档并追加更正，保留历史来源。
-- 搜索词、批量、渠道组合和普通超时可以按任务调整；明确的用户费用、权限及模型规则不自行更改。
+- Validate new capabilities with real search/reading results. Configuration, successful login, and a small model quiz are insufficient.
+- Verify a service's plugin and standalone MCP separately. Distinguish a tool's web search from its platform-detail/full-comment retrieval.
+- Archive outdated observations and append corrections while preserving historical sources.
+- Adapt queries, batch sizes, channel combinations, and ordinary timeouts to the task. Do not independently change explicit user rules on cost, permissions, or models.
 
-2026-09-30：公开版恢复统一工具组合、依赖对照表和Agent调用参考。该更新证明文档内容已补齐，不代表在每个用户环境中完成了工具运行验收。
+2026-09-30: The public version restored a unified tool combination, dependency checklist, and agent invocation references. This update establishes documentation coverage, not successful runtime validation in every user's environment.

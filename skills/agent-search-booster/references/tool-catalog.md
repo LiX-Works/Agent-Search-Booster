@@ -1,65 +1,65 @@
-# 工具组合与依赖对照
+# Tool combination and dependency checklist
 
-清单按接入类型组织，不是调用优先级。专用任务先用对应Skill；动态/登录/验证页面优先考虑OpenCLI与浏览器。获取论文官方PDF交`download-official-pdfs`，本地转换工具只处理已取得的文件。
+This catalog is organized by connection type, not invocation priority. Use the corresponding Skill first for specialist tasks. Prioritize OpenCLI and browsers for dynamic/login/verification pages. Route official article PDF acquisition to `download-official-pdfs`; local conversion tools process files already obtained.
 
-用于检查本Skill整合的组件是否准备好。Agent按任务检查将要使用的入口；用户也可用此清单提前准备，但逐项预先确认不是开始任务的条件。工具组合由Agent负责。工具分类采用本方案的接入方式；同一项目可能还提供其他运行方式。备注中的备选、补充和协作项不重复安装，也不把历史接通情况当作当前用户环境可用。
+Use this checklist to see whether the components integrated by this Skill are ready. Agents check the routes needed for the task. Users may prepare the full set in advance, but individual confirmation of every component is not a prerequisite for starting. The agent owns tool selection. Categories reflect the connection methods used here; projects may offer other modes. Do not install duplicate alternatives, supplements, or collaboration components, or treat a historical connection as proof of current availability.
 
-### 网页与 MCP
+### Web and MCP
 
-| 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
+| Tool | Type | Original link | Role | Notes |
 |---|---|---|---|---|
-| Exa | 远程 MCP / 插件 | [项目 / 文档](https://exa.ai/docs/get-started/exa-mcp) | 补充搜索来源、语义检索、指定网页读取 | 已有插件或独立 MCP 均可；同一服务不必重复接入 |
-| Tavily | 远程 MCP | [项目 / 文档](https://github.com/tavily-ai/tavily-mcp) | 网页搜索、时间/域名过滤、正文抽取 | OAuth 或服务凭据；额度按账户 |
-| Firecrawl | 远程 MCP | [项目 / 文档](https://docs.firecrawl.dev/mcp-server) | 网页抓取、解析和结构化抽取 | 额度敏感；按已授权入口使用 |
-| Context7 | 远程 MCP | [项目 / 文档](https://github.com/upstash/context7) | 查询软件库和 SDK 文档 | 本方案使用 HTTP/OAuth；也有本地运行方式 |
-| Jina Reader | HTTP 正文服务 | [项目 / 文档](https://jina.ai/reader) | 将可访问网页转换为可读正文 | 补充入口；公共 HTTP 与 MCP 分别确认 |
-| Jina MCP | 远程 MCP | [项目 / 文档](https://github.com/jina-ai/MCP) | 提供 Reader 等工具的 MCP 接入 | 备选接入；按工具确认认证，历史未作为默认依赖 |
+| Exa | Remote MCP / plugin | [Project / docs](https://exa.ai/docs/get-started/exa-mcp) | Additional search sources, semantic search, and specific-page reading | Reuse a plugin or standalone MCP; no duplicate connection to the same service is needed |
+| Tavily | Remote MCP | [Project / docs](https://github.com/tavily-ai/tavily-mcp) | Web search, time/domain filters, and text extraction | OAuth or service credentials; allowance depends on the account |
+| Firecrawl | Remote MCP | [Project / docs](https://docs.firecrawl.dev/mcp-server) | Page scraping, parsing, and structured extraction | Allowance-sensitive; use authorized access |
+| Context7 | Remote MCP | [Project / docs](https://github.com/upstash/context7) | Library and SDK documentation | HTTP/OAuth here; local operation is also available |
+| Jina Reader | HTTP text service | [Project / docs](https://jina.ai/reader) | Convert accessible pages into readable text | Supplementary route; assess public HTTP and MCP separately |
+| Jina MCP | Remote MCP | [Project / docs](https://github.com/jina-ai/MCP) | MCP access to Reader and related tools | Alternative connection; check per-tool authentication; not a historical default dependency |
 
-### 平台与 CLI
+### Platforms and CLI
 
-| 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
+| Tool | Type | Original link | Role | Notes |
 |---|---|---|---|---|
-| OpenCLI | 本地 CLI | [项目 / 文档](https://github.com/jackwener/OpenCLI) | 普通网站与平台的真实浏览器读取；动态/登录/验证页面、帖子、评论、字幕 | 支持通用web/browser入口；需Chrome、Bridge及必要的授权会话，不保证解除访问限制 |
-| Browser Bridge | Chrome 扩展 | [项目 / 文档](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | 连接 OpenCLI 与浏览器 | 需安装并启用；与 OpenCLI 配套 |
-| GitHub CLI | 本地 CLI | [项目 / 文档](https://cli.github.com/) | 读取仓库、代码、Issue、PR 与发布资料 | 命令 gh；认证范围按任务与账户 |
-| Grok Build | CLI / 辅助 Agent | [项目 / 文档](https://docs.x.ai/build/overview) | X 原帖、讨论串与补充网页研究 | 命令 grok；登录及账户额度需确认 |
-| Agent-Reach | 本地 CLI / 渠道管理 | [项目 / 文档](https://github.com/Panniantong/Agent-Reach) | 辅助接通和检查各内容渠道 | 补充组件；实际读取依赖各渠道工具 |
+| OpenCLI | Local CLI | [Project / docs](https://github.com/jackwener/OpenCLI) | Real-browser reading of ordinary sites and platforms; dynamic/login/verification pages, posts, comments, and transcripts | Generic web/browser entry points; requires Chrome, Bridge, and necessary authorized sessions; does not guarantee removal of access restrictions |
+| Browser Bridge | Chrome extension | [Project / docs](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | Connect OpenCLI to the browser | Install and enable it for OpenCLI |
+| GitHub CLI | Local CLI | [Project / docs](https://cli.github.com/) | Read repositories, code, Issues, PRs, and release materials | Command: `gh`; authentication scope depends on task and account |
+| Grok Build | CLI / auxiliary agent | [Project / docs](https://docs.x.ai/build/overview) | Original X posts, threads, and supplementary web research | Command: `grok`; check login and account allowance |
+| Agent-Reach | Local CLI / channel management | [Project / docs](https://github.com/Panniantong/Agent-Reach) | Help connect and check content channels | Supplementary component; actual reading depends on channel tools |
 
-### 本地材料与服务
+### Local materials and services
 
-| 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
+| Tool | Type | Original link | Role | Notes |
 |---|---|---|---|---|
-| Trafilatura | 本地 CLI | [项目 / 文档](https://github.com/adbar/trafilatura) | 从 HTML 或 URL 提取文章正文 | 适合可直接访问的文章页 |
-| MarkItDown | 本地 CLI | [项目 / 文档](https://github.com/microsoft/markitdown) | Office、CSV、PDF 等转 Markdown | 按格式准备依赖；另有 MCP 版本，本方案用 CLI |
-| Docling | 本地 CLI / 本地模型 | [项目 / 文档](https://github.com/docling-project/docling) | PDF 版面、表格、扫描件与 OCR | 需准备模型；复杂内容对照原页 |
-| FreshRSS | 自托管 RSS 服务 | [项目 / 文档](https://github.com/FreshRSS/FreshRSS) | 集中读取已订阅来源的更新 | 先部署和订阅；API 读取需单独启用 |
-| SearXNG | 自托管搜索服务 | [项目 / 文档](https://github.com/searxng/searxng) | 聚合公开搜索引擎结果 | 常用 Docker 部署；JSON 输出需启用 |
+| Trafilatura | Local CLI | [Project / docs](https://github.com/adbar/trafilatura) | Extract article text from HTML or URLs | For directly accessible article pages |
+| MarkItDown | Local CLI | [Project / docs](https://github.com/microsoft/markitdown) | Convert Office, CSV, PDFs, and other files to Markdown | Prepare format dependencies; MCP also exists, but this workflow uses the CLI |
+| Docling | Local CLI / local models | [Project / docs](https://github.com/docling-project/docling) | PDF layout, tables, scans, and OCR | Prepare models; check complex content against original pages |
+| FreshRSS | Self-hosted RSS service | [Project / docs](https://github.com/FreshRSS/FreshRSS) | Read updates from subscribed sources | Deploy and subscribe first; enable API reading separately |
+| SearXNG | Self-hosted search service | [Project / docs](https://github.com/searxng/searxng) | Aggregate public search engines | Often deployed with Docker; enable JSON output |
 
-### 运行与配置支撑
+### Runtime and configuration support
 
-| 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
+| Tool | Type | Original link | Role | Notes |
 |---|---|---|---|---|
-| Chrome | 浏览器 | [项目 / 文档](https://www.google.com/chrome/) | 承载 Bridge 和已有站点登录态 | Agent 使用用户实际授权的配置 |
-| Node.js | CLI 运行环境 | [项目 / 文档](https://nodejs.org/) | 运行 npm 安装的 OpenCLI 等工具 | 版本按对应工具要求 |
-| Python | CLI 运行环境 | [项目 / 文档](https://www.python.org/) | 运行本地抽取与文档工具 | 建议隔离依赖，避免改坏既有项目 |
-| uv | 环境 / 工具管理 CLI | [项目 / 文档](https://docs.astral.sh/uv/) | 隔离安装和运行 Python 工具 | 管理工具，不直接提供搜索内容 |
-| Docker Desktop | 容器运行环境 | [项目 / 文档](https://docs.docker.com/desktop/) | 运行本地 SearXNG 等容器服务 | 使用容器时 Docker Engine 需运行 |
-| CC Switch | 本地配置管理器 | [项目 / 文档](https://github.com/farion1231/cc-switch) | 集中管理 MCP 等客户端配置 | 可沿用原配置方法；不是搜索服务 |
+| Chrome | Browser | [Project / docs](https://www.google.com/chrome/) | Host Bridge and existing site sessions | Use the browser profile actually authorized by the user |
+| Node.js | CLI runtime | [Project / docs](https://nodejs.org/) | Run npm-installed tools such as OpenCLI | Follow each tool's version requirements |
+| Python | CLI runtime | [Project / docs](https://www.python.org/) | Run local extraction and document tools | Isolate dependencies to avoid breaking existing projects |
+| uv | Environment / tool-management CLI | [Project / docs](https://docs.astral.sh/uv/) | Isolated installation and execution of Python tools | Management tool; does not directly provide search content |
+| Docker Desktop | Container runtime | [Project / docs](https://docs.docker.com/desktop/) | Run local services such as SearXNG containers | Docker Engine must be running when containers are used |
+| CC Switch | Local configuration manager | [Project / docs](https://github.com/farion1231/cc-switch) | Centralize MCP and other client configuration | Preserve the existing configuration method; not a search service |
 
-### 协作衔接
+### Collaboration
 
-| 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
+| Tool | Type | Original link | Role | Notes |
 |---|---|---|---|---|
-| AGY / Gemini | CLI / 辅助 Agent | [项目 / 文档](https://www.antigravity.google/docs/cli/overview) | 视频与相关帧分析 | 按subagent-manager专项规则或用户明确请求；不默认处理普通批量文字 |
-| subagent-manager | 配套 Skill | [项目 / 文档](https://github.com/LiX-Works/subagent-manager) | 管理子代理模型、交接和 Grok 额度 | 协作规则可衔接；不影响主搜索入口 |
+| AGY / Gemini | CLI / auxiliary agent | [Project / docs](https://www.antigravity.google/docs/cli/overview) | Video and related frame analysis | Follow `subagent-manager` specialist rules or explicit user requests; ordinary batch text is not a default responsibility |
+| subagent-manager | Companion Skill | [Project / docs](https://github.com/LiX-Works/subagent-manager) | Manage subagent models, handoffs, and Grok allowance | Collaboration rules can connect with this workflow without changing the main search entry point |
 
-## Agent检查方法
+## Agent checks
 
-- MCP/插件：确认当前工具发现中是否暴露所需search/fetch/scrape/query类入口，有授权时选一个任务相关的最小实际调用；配置文件和登录标记不能代替返回结果。
-- CLI：用Get-Command/command -v和对应--help确认入口、版本和参数；发现缺失再按原链接指路，不为检查重新安装。
-- 浏览器：确认Bridge与用户授权的浏览器配置，必要时OpenCLI doctor；桥连通、站点登录和目标内容取得分别记录。
-- 本地服务：使用者提供自己的实例URL，检查可达性和读取接口；不预设作者端口、Docker容器名或包装命令。
-- 首次配齐时输出“可用/缺失/需登录/未验收”及能力影响，普通任务只检查将要用到的入口。不要要求用户为每次搜索选择工具。
-- 完整组合的依赖可以逐项补齐；尚未配齐时仍能运行现有路线，但不能声称全部能力已启用。
+- MCP/plugin: Check current discovery for required search/fetch/scrape/query tools. When authorized, make a minimal task-relevant real call. Configuration files and login markers do not replace returned results.
+- CLI: Use `Get-Command`/`command -v` and the corresponding `--help` to check the entry point, version, and parameters. If missing, point to the original links rather than reinstalling for the check.
+- Browser: Check Bridge and the user's authorized profile, using OpenCLI `doctor` when necessary. Record bridge connectivity, site login, and target-content retrieval separately.
+- Local services: Use the user's own instance URL and check reachability and reading interfaces. Do not assume the author's ports, Docker container names, or wrapper commands.
+- During initial preparation, report available/missing/login needed/not validated and the capability impact. For ordinary tasks, check only needed routes. Do not ask the user to select tools for every search.
+- Complete dependencies can be prepared one by one. Existing routes can still run before the entire set is ready, but do not claim every capability is enabled.
 
-必要MCP代码和运行连接条件见[配置要点](setup.md)。原链接按2026-09-30官方或原项目资料核对；上游变化时重新确认。
+See [essential setup](setup.md) for MCP snippets and runtime connection conditions. Original links were checked against official or original-project materials on 2026-09-30; recheck when upstream sources change.

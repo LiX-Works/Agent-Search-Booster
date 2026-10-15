@@ -1,5 +1,5 @@
 interface:
   display_name: "Agent Search Booster"
-  short_description: "按任务分流搜索与读取，处理动态及验证页面，衔接学术检索和官方PDF下载"
+  short_description: "Search, dynamic/verification pages, papers, and official PDFs"
 policy:
   allow_implicit_invocation: true

@@ -1,25 +1,25 @@
-# 批量分析与子代理衔接
+# Batch analysis and subagent handoffs
 
-资料已取得、适合独立交付时，可以把阅读、抽取或审查交给已配置子代理。委派只是本搜索流程的辅助能力，资料获取与浏览器会话仍由主Agent协调。
+Once materials have been obtained and the work is suitable for independent delivery, configured subagents may handle reading, extraction, or review. Delegation supports this search workflow; the lead agent still coordinates content acquisition and browser sessions.
 
-- 有subagent-manager时读取其规则并使用本会话允许的参数组合；有意使用all继承时不附不兼容的模型/强度覆盖。交代目标、必要材料、应读的Skill/参考路径、需要取得的内容、操作范围和停止/验收要求。缺少工具返回具体缺项，不把未尝试的路线写成不可用。
-- 普通批量文字优先按任务选择原生代理。AGY/Gemini用于视频及相关帧分析，其他职责仅按用户明确请求；不自动共享Codex的MCP、Skill或凭据。是否装好与本搜索Skill是否可用分别判断。
-- 只有实际有帮助才委派，不为调用数量拆任务，也不让多个代理同时操纵一个浏览器会话。
-- 主Agent检查原文与来源。模型一致不代替核验，辅助Agent缺少材料不能虚构已经搜索过。
-- 外部CLI只用已授权免费/订阅入口，明确工作目录和权限；不跨项目复用私人会话，不自动安装或登录其他Agent来补当前任务。
+- When `subagent-manager` is available, read its rules and use parameter combinations permitted by the current session. Intentional `all` inheritance omits incompatible model/effort overrides. Provide the goal, necessary materials, Skill/reference paths to read, content to obtain, operational scope, and stop/acceptance criteria. Return specific missing tools instead of calling unattempted routes unavailable.
+- For ordinary batch text work, choose native agents appropriate to the task first. AGY/Gemini handles video and related frame analysis; other responsibilities require an explicit user request. It does not automatically share Codex's MCPs, Skills, or credentials. Judge its installation separately from this search Skill's usability.
+- Delegate only when useful, not to increase invocation counts. Do not let multiple agents manipulate one browser session at the same time.
+- The lead agent checks original text and sources. Model agreement does not replace verification, and an auxiliary agent missing material must not claim to have searched it.
+- External CLIs use only authorized free/subscription access, with an explicit working directory and permissions. Do not reuse private sessions across projects or automatically install or log into another agent to fill a gap in the current task.
 
-缺少subagent-manager或AGY时，由主Agent完成或使用当前可用原生代理，本Skill的搜索工具组合仍可运行。
+When `subagent-manager` or AGY is missing, the lead agent or available native agents can handle the work. This Skill's search-tool combination can still run.
 
-## AGY无头调用入口
+## AGY headless entry point
 
-视频/相关帧任务需要时，或用户明确请求其他Gemini职责时，先读当前可用subagent-manager的视频规则。已安装、登录且调用获授权后，核对模型与帮助并显式指定组合。在独立目录运行，传已取得媒体的可访问路径、观察目标、所需时间戳/字面数值、覆盖与不确定性要求：
+For video/related-frame work, or other Gemini responsibilities explicitly requested by the user, first read the currently available `subagent-manager` video rules. After installation, login, and invocation authorization are in place, check the models and help and explicitly specify the combination. Run in a separate directory. Provide an accessible path to the obtained media, observation goals, required timestamps/literal values, and coverage and uncertainty requirements:
 
 ```powershell
 agy --help
 agy models
-agy --model MODEL_ID --effort high --mode plan --sandbox --disable-slash-commands --output-format json -p '分析指定视频与相关帧；返回实际覆盖、时间戳、字面文字/数值、观察与推断、不确定项和缺口。不要修改文件。'
+agy --model MODEL_ID --effort high --mode plan --sandbox --disable-slash-commands --output-format json -p 'Analyze the specified video and related frames. Return actual coverage, timestamps, literal text/values, observations versus inferences, uncertainties, and gaps. Do not modify files.'
 ```
 
-MODEL_ID由当前实际可用模型选择，不是需要原样执行的名称。长材料用客户端支持的stdin/stream-json或已经验收的包装脚本交接，避免Windows命令行长度和转义问题。输出JSON不是完整工具审计；plan/sandbox和只读提示不能单独证明写权限已关闭，检查工作目录与实际行为，不自动批准越界操作。
+Select `MODEL_ID` from models actually available now; it is not a literal model name to execute. Hand off long material through client-supported stdin/stream-json or a previously validated wrapper to avoid Windows command-line length and escaping issues. JSON output is not a full tool audit. `plan`/`sandbox` and a read-only prompt do not by themselves prove write access is disabled. Check the working directory and actual behavior; do not automatically approve out-of-scope operations.
 
-当前官方入口见[AGY无头模式](https://www.antigravity.google/docs/cli/headless/)。文案全面编辑属于另一职责，不因普通资料分析就自动委派写作。
+See the current official [AGY headless documentation](https://www.antigravity.google/docs/cli/headless/). Comprehensive copy editing is a separate responsibility and is not automatically delegated by an ordinary material-analysis task.

@@ -1,58 +1,60 @@
 ---
 name: agent-search-booster
-description: 搜索与资料获取增强：普通搜索遗漏来源、网页只有摘要或返回403/验证页、需要登录或动态加载、论坛帖子评论与视频字幕、X讨论、代码文档及本地材料时，调度MCP、OpenCLI/浏览器与CLI。学术论文检索和官方PDF下载转对应专用Skill。Use for incomplete web retrieval, interactive pages, platform content and multi-source search.
+description: Coordinate MCP, OpenCLI/browser, and CLI tools when ordinary search misses sources, pages return only snippets or 403/verification screens, content requires login or dynamic loading, or tasks involve forum posts and comments, video transcripts, X discussions, code documentation, or local materials. Route academic discovery and official article PDF downloads to their dedicated Skills. Use for incomplete web retrieval, interactive pages, platform content, and multi-source search.
 ---
 
 # Agent Search Booster
 
-用户提出任务，本Skill统一调度搜索与资料获取工具。目标是扩大普通搜索的来源覆盖，并取得更完整、可分析的正文、帖子、评论与文档。Agent按任务确认所需入口、连接和必要登录；用户可提前配齐依赖，但不必逐项预先确认才能开始。不要把工具选择和每一步操作交回用户。
+The user provides the task; this Skill coordinates search and content retrieval tools. Broaden the sources ordinary search can reach and obtain fuller page text, posts, comments, and documents for analysis. Check the required entry points, connections, and logins for the task. Users may prepare dependencies in advance, but do not require them to confirm every component before starting. Take responsibility for tool selection and execution instead of handing every step back to the user.
 
-## 先判断任务，再选入口
+Use the user's language for replies and progress updates, and follow the requested language for deliverables. English Skill instructions do not require English conversation.
 
-按下面的顺序判断职责和缺口，不按工具清单的排列顺序逐个调用。专用任务优先交给专用Skill；同一研究可以组合不同路线。用户没有写出Skill名称，也应按任务内容使用合适的路线。
+## Assess the task before choosing tools
 
-### 1. 先识别专用任务
+Use the following order to identify responsibilities and gaps; do not invoke tools one by one in catalog order. Route specialist tasks to dedicated Skills first. A single research task may combine several routes. Choose the appropriate route from the task even when the user has not named a Skill.
 
-| 任务 | 先读取并使用 | 本Skill的配合范围 |
+### 1. Identify specialist tasks first
+
+| Task | Read and use first | This Skill's supporting role |
 |---|---|---|
-| 学术论文发现、DOI/元数据、引用核验 | `nature-academic-search`或`paper-lookup` | 补官网、作者信息和社区讨论，不用普通搜索代替学术身份核验 |
-| 下载或保存论文官方PDF | `download-official-pdfs` | 交接DOI、官方文章页或引用；出版社访问挑战由下载器的浏览器流程处理 |
-| OpenAI模型、Codex/ChatGPT功能配置 | 当前可用的`openai-docs` | 按该Skill核对本地证据与官方资料 |
+| Academic article discovery, DOI/metadata, citation verification | `nature-academic-search` or `paper-lookup` | Add official sites, author information, and community discussions; do not substitute ordinary search for scholarly identity checks |
+| Downloading or saving official article PDFs | `download-official-pdfs` | Hand off verified DOIs, official article pages, or citations; the downloader's browser workflow handles publisher access challenges |
+| OpenAI models or Codex/ChatGPT features and configuration | The currently available `openai-docs` | Follow that Skill to check local evidence and official sources |
 
-**论文PDF的获取与本地PDF的阅读是两件事。** 用户要求“找论文并下载”时，同一任务内完成发现、身份核验和下载交接，无需用户再点名下载器或重发指令。先读下载器并执行其适用流程，再判断下载结果；一次HTTP 403、空正文或登录页不能证明论文无法下载。输入可用已核验的DOI、标题/引用、官方文章页和目标目录；状态与最终文件验收以下载器为准，不在此复制其脚本和来源规则。仅要求检索时不擅自扩展为批量下载。
+**Obtaining an article PDF and reading a local PDF are separate tasks.** When the user asks to find and download papers, complete discovery, identity checks, and the download handoff within the same task; do not require them to name the downloader or repeat the request. Read the downloader and execute its applicable workflow before assessing the download outcome. A single HTTP 403, empty body, or login page does not prove the paper cannot be downloaded. Inputs may include verified DOIs, titles/citations, official article pages, and the destination directory. Use the downloader's status and final-file acceptance criteria; do not duplicate its scripts or source rules here. A discovery-only request does not authorize expanding into batch downloads.
 
-先区分Skill本身缺失与其运行依赖缺失。缺少对应Skill时，说明缺项和受影响阶段，继续可独立完成的工作；Skill已存在而运行环境缺失时，读取它的准备/恢复说明，按当前授权处理并复查（例如下载器的Runtime/bootstrap流程），不要把可恢复的环境缺项直接当最终失败。不要默默改用通用下载器或其他来源冒充官方PDF。
+Distinguish a missing Skill from missing runtime dependencies. If the relevant Skill is absent, state what is missing and which stage it affects, then continue independent work. If the Skill exists but its runtime is missing, read its preparation/recovery instructions, act within current authorization, and recheck, such as the downloader's Runtime/bootstrap workflow. Do not treat a recoverable environment gap as a final failure. Do not silently substitute a generic downloader or another source and present it as an official PDF.
 
-### 2. 需要真实浏览器时，尽早转入
+### 2. Move to a real browser early when needed
 
-**OpenCLI / Browser Bridge与当前可用浏览器是核心读取路线，不只是社交平台的附加工具。** 已知页面需要登录态、JavaScript加载、展开或分页，或普通读取只取得验证页、登录页、空壳、明显不完整的正文时，先读[浏览器与平台读取](references/platforms.md)，按目标使用平台适配器、通用`opencli web read`或浏览器会话。没有专用平台适配器的高校、实验室等网站也能考虑通用入口；无需先把所有HTTP抓取工具试完。
+**OpenCLI / Browser Bridge and the currently available browser are core reading routes, not merely add-ons for social platforms.** When a page is known to require an authenticated session, JavaScript loading, expansion, or pagination, or ordinary reading returns only verification/login screens, an empty shell, or clearly incomplete text, first read [browser and platform reading](references/platforms.md). Use a platform adapter, generic `opencli web read`, or a browser session as appropriate. Generic entry points may also help with university and laboratory sites without dedicated adapters; there is no need to exhaust every HTTP fetch tool first.
 
-这条路线利用正常浏览器和已授权会话，不保证所有验证码或访问限制都能解决。论文PDF下载仍走上面的专用下载器。429按实际限流反馈处理，不靠连续刷新或切换账号强行重试。
+This route uses a normal browser and authorized sessions. It does not guarantee resolution of every CAPTCHA or access restriction. Article PDF downloads still use the dedicated downloader above. Handle 429 responses according to actual rate-limit feedback; do not force retries through continuous refreshes or account switching.
 
-### 3. 其余任务按材料和证据需要选工具
+### 3. Choose other tools by material and evidence needs
 
-| 需求 | 主要入口 | 按需读取 |
+| Need | Main entry points | Read as needed |
 |---|---|---|
-| 普通网页、事实、新闻、补遗漏 | 内置搜索，Exa/Tavily，合适时SearXNG | [网页与MCP](references/web-tools.md) |
-| 可直接访问的URL，但摘录不全或需正文 | 原页、Exa fetch、Trafilatura，按价值补Firecrawl/Jina | 网页与MCP、[本地材料](references/local-tools.md) |
-| 库、SDK、代码、版本行为 | 官方文档、Context7、GitHub原仓库/已授权`gh` | 网页与MCP |
-| 平台帖子、评论、视频字幕 | OpenCLI适配器或当前可用浏览器 | 浏览器与平台读取 |
-| X原帖、线程、有价值的时效性研究与独立复核 | 非常鼓励用Grok深入研究、追查反例；不用等其他搜索失败 | [Grok路由](references/grok.md) |
-| 已取得的PDF、Office、扫描件；订阅更新 | MarkItDown、Docling；FreshRSS | 本地材料，不替代论文下载 |
-| 批量读材料、独立研究子问题 | 有助于交付才委派 | [协作衔接](references/collaboration.md) |
+| Ordinary pages, facts, news, and missing sources | Built-in search, Exa/Tavily, and SearXNG when suitable | [Web and MCP tools](references/web-tools.md) |
+| An accessible URL with incomplete snippets or a need for full text | Original page, Exa fetch, Trafilatura; add Firecrawl/Jina when useful | Web and MCP tools; [local materials](references/local-tools.md) |
+| Libraries, SDKs, code, and version behavior | Official documentation, Context7, original GitHub repositories / authorized `gh` | Web and MCP tools |
+| Platform posts, comments, and video transcripts | OpenCLI adapters or the currently available browser | Browser and platform reading |
+| Original X posts, threads, useful timely research, and independent checks | Strongly encourage Grok for deeper research and counterexamples; do not wait for other searches to fail | [Grok routing](references/grok.md) |
+| Already obtained PDFs, Office files, scans; subscription updates | MarkItDown, Docling; FreshRSS | Local materials; not a substitute for article downloads |
+| Batch reading and independent research subquestions | Delegate only when it helps delivery | [Collaboration](references/collaboration.md) |
 
-重要性取决于当前任务：先把影响结论的原始资料读到，再按价值补其他来源。官网或论文支撑事实，论坛和X补实践、争议与线索；来源用途不能互相冒充。不固定来源比例，也不要求每题运行全部工具。只加载当前路线的参考文件；首次准备或发现缺项时读[工具清单](references/tool-catalog.md)与[必要配置](references/setup.md)。历史快照不当作当前健康证明；浏览器与CLI入口以使用者的实际环境为准。
+Priorities depend on the task. Read the primary material that affects the conclusion first, then add other sources by value. Official sites and papers support facts; forums and X add practical experience, disputes, and leads. Do not substitute one source's role for another. Do not impose fixed source ratios or run every tool for every question. Load only the references for the current route. Read the [tool catalog](references/tool-catalog.md) and [essential setup](references/setup.md) during initial preparation or when a component is missing. Historical snapshots are not proof of current health; browser and CLI availability depends on the user's actual environment.
 
-## 失败后换路线，并核对实际覆盖
+## Change routes after failure and check actual coverage
 
-- MCP未暴露、CLI缺失、浏览器未连接、站点需登录和目标页读取失败分别判断。**远程MCP未暴露不代表本地OpenCLI、`gh`或浏览器不可用。** 检查当前可发现工具及任务相关CLI的PATH/帮助；不为普通任务全套巡检、重装或改全局配置。
-- 对影响结论的读取缺口，尝试对应专用Skill或适合障碍的替代入口后，再报告受阻。没有尝试、缺少依赖、实际调用失败分开写。无价值页面可以跳过并说明；权限拒绝、持续验证、限流或登录中断按实际障碍收束，不循环硬重试。
-- 普通摘录不全可换正文抽取；动态/验证页面换真实浏览器；官方PDF交下载器。不要对同一障碍反复发送同样的HTTP请求，也不要把HTTP 200的登录页当成功。
-- 批量任务或重要缺口保留简短记录：`目标/URL｜路线｜已尝试/未尝试/缺依赖｜所得材料及覆盖｜剩余障碍`。区分搜索命中、摘要、正文、评论/字幕、已验证PDF；简短回答不强制附全表。
-- 委派时交代本子任务应读的Skill/参考路径、需要取得的材料和停止条件。子代理只用本会话实际提供的能力；缺项要返回，不能把未尝试的路线写成不可用。
+- Distinguish an unexposed MCP, missing CLI, disconnected browser, site login requirement, and target-page reading failure. **An unexposed remote MCP does not mean local OpenCLI, `gh`, or browsers are unavailable.** Check current tool discovery and the PATH/help of task-relevant CLIs. Do not perform a full environment audit, reinstall tools, or change global configuration for an ordinary task.
+- Before reporting a consequential reading gap as blocked, try the relevant dedicated Skill or an alternative suited to the obstacle. Separate unattempted routes, missing dependencies, and actual invocation failures. Skip low-value pages with an explanation when appropriate. Conclude according to actual permission denial, persistent verification, rate limits, or interrupted login; do not loop through forced retries.
+- Use text extraction for incomplete ordinary snippets, a real browser for dynamic/verification pages, and the downloader for official PDFs. Do not repeat identical HTTP requests against the same obstacle or treat an HTTP 200 login page as success.
+- For batches or important gaps, keep a short record: `target/URL | route | attempted/not attempted/missing dependency | material obtained and coverage | remaining obstacle`. Distinguish search hits, snippets, full text, comments/transcripts, and verified PDFs. Short answers do not require a complete table.
+- Delegation handoffs identify the Skill/reference paths to read, materials to obtain, and stop conditions. Subagents use only capabilities actually available in their session. Return specific missing components instead of describing unattempted routes as unavailable.
 
-## 交付与操作范围
+## Delivery and operational scope
 
-结果应回答用户问题，保留必要来源和未决项。原文核验、时效及操作边界见[执行规则](references/operating-rules.md)，不每次复制成警告清单。安装与配置不等于实际获取成功；辅助模型和多个模型共识也不替代来源。
+Answer the user's question with necessary sources and unresolved points. See [operating rules](references/operating-rules.md) for original-source checks, timeliness, and operational boundaries; do not repeat them as a warning checklist in every response. Installation and configuration do not prove successful retrieval. Auxiliary models and agreement among models do not replace sources.
 
-Skill提供统一调用指引，MCP、CLI、账户和浏览器连接仍需在运行环境可用。运行中可按[经验记录](references/experience.md)积累可迁移的成功方法、故障与回退路径；不把一次结果自动升为永久规定。
+This Skill provides coordinated invocation guidance. MCPs, CLIs, accounts, and browser connections must still be available in the runtime environment. Use the [experience notes](references/experience.md) to record transferable successes, failures, and fallback routes during authorized work. Do not automatically turn one outcome into a permanent rule.
