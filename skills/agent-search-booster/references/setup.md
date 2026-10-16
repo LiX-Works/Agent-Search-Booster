@@ -4,7 +4,7 @@ Read during initial tool preparation or when an agent finds a missing component.
 
 ## Remote MCP: Codex configuration
 
-Keep the existing configuration-management method. If a plugin or MCP for the same service already exists, check whether its tools are available before creating another connection. These key-free OAuth examples are additions to your configuration, not replacements for the entire file:
+Add MCP servers directly in Codex's MCP settings or edit `~/.codex/config.toml`. If a plugin or MCP for the same service already exists, check whether its tools are available before creating another connection. Add the key-free OAuth examples below to your existing configuration:
 
 ```toml
 [mcp_servers.exa]
@@ -34,17 +34,6 @@ codex mcp login firecrawl
 ```
 
 Free, plan-included, or other capacity depends on the signed-in account. This reference does not enable metered API usage, purchases, or top-ups; OAuth does not guarantee unlimited capacity. When the official Exa plugin already supplies the needed tools, reuse it without creating a standalone MCP.
-
-With CC Switch, enter the client-supported HTTP type and URL in the relevant service's MCP configuration. For example:
-
-```json
-{
-  "type": "http",
-  "url": "https://mcp.context7.com/mcp/oauth"
-}
-```
-
-CC Switch writes/synchronizes connection definitions; OAuth authentication still occurs in the client. After exporting or synchronizing, check the URL, enabled state, and required tools to avoid overwriting existing connection restrictions.
 
 Jina MCP is an alternative to Reader's public HTTP entry point. Its configuration structure is below; confirm the selected tool's authentication requirements before enabling it when needed:
 

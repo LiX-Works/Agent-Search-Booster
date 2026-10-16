@@ -2,7 +2,11 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-**A Skill that gives AI agents the power to search across the web, scrape hard-to-reach pages, and read original content—from articles and documentation to posts, comments, and video transcripts.**
+Agent Search Booster is a Skill that gives AI agents the power to search across the web, scrape hard-to-reach pages, and read original content. It brings search engines, real browsers, platform readers, and document tools into one workflow. You describe what you need; the agent chooses the tools and retrieves the material.
+
+- **Scrape full pages. Read more content.** Go beyond snippets to articles, forum posts, comments, and video transcripts. Get past dynamic loading and bot-check pages using a real browser.
+- **Search far beyond a single engine.** Combine web search, platform search, X discussions, GitHub, and technical documentation to uncover sources and perspectives ordinary search can miss.
+- **Clear routing. Smarter tool use.** Systematic rules guide the agent to the right MCP, browser, or CLI tool for each task—and to a suitable alternative when one route fails. No need to pick tools or remember commands yourself.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
@@ -10,12 +14,7 @@
   <img src="assets/search-booster-overview.png" alt="AI Agent connects through search, platform, web-text, code-documentation, and document tools to representative sources." width="1600">
 </picture>
 
-- **Broader search coverage:** reach original posts, discussions, specialist sources, and documentation that ordinary search can miss.
-- **More complete content:** continue from links and snippets into page text, comment replies, transcripts, and file content.
-
-The agent checks the routes relevant to the task, uses the tools it needs, and reports what it obtained and what remains missing. You provide the objective; you do not need to choose a tool or remember its commands for every step.
-
-Built for Codex. This README is available in English and Chinese; the Skill and its invocation guides are in English. The agent replies in your preferred language.
+Built mainly for Codex. This README is available in English and Chinese; the Skill and its invocation guides are in English. The agent replies in your preferred language.
 
 ## Using it
 
@@ -42,7 +41,7 @@ Once the tools are ready, you provide the objective and scope. The detailed invo
 
 This is the complete component list integrated by this setup, for checking readiness. Reuse existing connections; notes identify supplemental routes and supporting components. The agent selects tools for each task, rather than calling all of them every time.
 
-### Web and MCP
+### MCP & APIs
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|
@@ -53,7 +52,7 @@ This is the complete component list integrated by this setup, for checking readi
 | Jina Reader | HTTP reader service | [Project / docs](https://jina.ai/reader) | Turn accessible web pages into readable text | Supplemental route; HTTP and MCP are separate connections |
 | Jina MCP | Remote MCP | [Project / docs](https://github.com/jina-ai/MCP) | Expose Reader and related tools through MCP | Alternative connection; verify authentication for each tool |
 
-### Platforms and CLIs
+### CLI & Browser
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|
@@ -63,17 +62,22 @@ This is the complete component list integrated by this setup, for checking readi
 | Grok Build | CLI / auxiliary agent | [Project / docs](https://docs.x.ai/build/overview) | Research X posts, threads, and related web sources | Command: grok; sign-in and account allowance required |
 | Agent-Reach | Local CLI / channel management | [Project / docs](https://github.com/Panniantong/Agent-Reach) | Manage and check supporting content channels | Supplemental component; underlying tools perform retrieval |
 
-### Local documents and services
+### Document CLIs
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|
 | Trafilatura | Local CLI | [Project / docs](https://github.com/adbar/trafilatura) | Extract article text from HTML or URLs | Best for directly accessible article pages |
 | MarkItDown | Local CLI | [Project / docs](https://github.com/microsoft/markitdown) | Convert Office, CSV, PDF, and other files to Markdown | Install format dependencies; this setup uses the CLI |
 | Docling | Local CLI / local models | [Project / docs](https://github.com/docling-project/docling) | Read PDF layouts, tables, scans, and OCR | Models must be available; check complex output against originals |
+
+### Self-hosted Services
+
+| Tool | Type | Original link | Purpose | Notes |
+|---|---|---|---|---|
 | FreshRSS | Self-hosted RSS service | [Project / docs](https://github.com/FreshRSS/FreshRSS) | Read updates from subscribed sources | Deploy and subscribe first; enable API access if used |
 | SearXNG | Self-hosted search service | [Project / docs](https://github.com/searxng/searxng) | Aggregate public search-engine results | Often deployed with Docker; JSON output must be enabled |
 
-### Runtime and configuration support
+### Runtime & Setup
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|
@@ -82,9 +86,8 @@ This is the complete component list integrated by this setup, for checking readi
 | Python | CLI runtime | [Project / docs](https://www.python.org/) | Run local extraction and document tools | Isolate dependencies from existing projects |
 | uv | Environment / tool management CLI | [Project / docs](https://docs.astral.sh/uv/) | Install and run Python tools in isolated environments | Supports tools; does not itself retrieve content |
 | Docker Desktop | Container runtime | [Project / docs](https://docs.docker.com/desktop/) | Run containerized services such as SearXNG | The Docker Engine must be running |
-| CC Switch | Local configuration manager | [Project / docs](https://github.com/farion1231/cc-switch) | Manage client configurations, including MCP | An existing configuration method can be retained |
 
-### Optional collaboration
+### Collaboration
 
 | Tool | Type | Original link | Purpose | Notes |
 |---|---|---|---|---|

@@ -44,7 +44,6 @@ Use this checklist to see whether the components integrated by this Skill are re
 | Python | CLI runtime | [Project / docs](https://www.python.org/) | Run local extraction and document tools | Isolate dependencies to avoid breaking existing projects |
 | uv | Environment / tool-management CLI | [Project / docs](https://docs.astral.sh/uv/) | Isolated installation and execution of Python tools | Management tool; does not directly provide search content |
 | Docker Desktop | Container runtime | [Project / docs](https://docs.docker.com/desktop/) | Run local services such as SearXNG containers | Docker Engine must be running when containers are used |
-| CC Switch | Local configuration manager | [Project / docs](https://github.com/farion1231/cc-switch) | Centralize MCP and other client configuration | Preserve the existing configuration method; not a search service |
 
 ### Collaboration
 

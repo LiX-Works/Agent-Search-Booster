@@ -2,7 +2,11 @@
 
 [English](README.md) | **简体中文**
 
-**一个大幅增强 AI Agent 网络搜索、网页抓取与内容读取能力的 Skill——从文章、技术文档到原帖、评论和视频字幕，深入获取普通搜索容易遗漏的内容。**
+Agent Search Booster 是一个大幅增强 AI Agent 网络搜索、网页抓取与资料读取能力的 Skill。它把搜索引擎、真实浏览器、平台读取和文档工具整合成一套工作流。你只需说明想找什么、想读什么，Agent 就会选择工具，搜索来源并取得内容。
+
+- **抓取完整网页，读取更多内容。** 从搜索摘要深入到文章正文、论坛原帖、评论和视频字幕；突破动态加载、人机验证等网页读取障碍。
+- **远超单一搜索引擎的覆盖。** 结合网页搜索、平台站内搜索、X 讨论、GitHub 和技术文档，找到普通搜索容易遗漏的来源与观点。
+- **分流清晰，工具自动选。** 系统的规则指导 Agent 何时调用哪种 MCP、浏览器或 CLI 工具，一条路线失败就切换合适的替代入口；无需你逐步指定工具或记住命令。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
@@ -10,12 +14,7 @@
   <img src="assets/search-booster-overview.png" alt="AI Agent 通过搜索、平台读取、网页正文、代码文档及本地文档工具连接不同来源。" width="1600">
 </picture>
 
-- **扩大搜索覆盖**：补充普通搜索容易遗漏的原帖、讨论、专业来源和技术文档。
-- **取得更完整的内容**：从链接和摘要继续读到网页正文、评论回复、字幕及文件内容。
-
-Agent 检查与任务相关的入口，选择需要的工具，并说明已取得的内容和剩余缺口。你交代目标，无需在每一步手动选工具或记住命令。
-
-目前面向 Codex。首页提供中英双语，Skill 及调用说明使用英文；Agent 仍按你的语言偏好回复。
+目前主要面向 Codex。首页提供中英双语，Skill 及调用说明使用英文；Agent 仍按你的语言偏好回复。
 
 ## 怎么用
 
@@ -41,7 +40,7 @@ Agent 检查与任务相关的入口，选择需要的工具，并说明已取�
 
 这是本方案整合的完整组件清单，用来检查是否配齐。已有对应入口可复用；备注注明补充、备选或运行组件。配齐后仍由 Agent 按任务调度，不会每题调用全部工具。
 
-### 网页与 MCP
+### MCP 与 API
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
@@ -52,7 +51,7 @@ Agent 检查与任务相关的入口，选择需要的工具，并说明已取�
 | Jina Reader | HTTP 正文服务 | [项目 / 文档](https://jina.ai/reader) | 将可访问网页转换为可读正文 | 补充入口；公共 HTTP 与 MCP 分别确认 |
 | Jina MCP | 远程 MCP | [项目 / 文档](https://github.com/jina-ai/MCP) | 提供 Reader 等工具的 MCP 接入 | 备选接入；按工具确认认证，历史未作为默认依赖 |
 
-### 平台与 CLI
+### CLI 与浏览器
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
@@ -62,17 +61,22 @@ Agent 检查与任务相关的入口，选择需要的工具，并说明已取�
 | Grok Build | CLI / 辅助 Agent | [项目 / 文档](https://docs.x.ai/build/overview) | X 原帖、讨论串与补充网页研究 | 命令 grok；登录及账户额度需确认 |
 | Agent-Reach | 本地 CLI / 渠道管理 | [项目 / 文档](https://github.com/Panniantong/Agent-Reach) | 辅助接通和检查各内容渠道 | 补充组件；实际读取依赖各渠道工具 |
 
-### 本地材料与服务
+### 文档 CLI
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
 | Trafilatura | 本地 CLI | [项目 / 文档](https://github.com/adbar/trafilatura) | 从 HTML 或 URL 提取文章正文 | 适合可直接访问的文章页 |
 | MarkItDown | 本地 CLI | [项目 / 文档](https://github.com/microsoft/markitdown) | Office、CSV、PDF 等转 Markdown | 按格式准备依赖；另有 MCP 版本，本方案用 CLI |
 | Docling | 本地 CLI / 本地模型 | [项目 / 文档](https://github.com/docling-project/docling) | PDF 版面、表格、扫描件与 OCR | 需准备模型；复杂内容对照原页 |
+
+### 自托管服务
+
+| 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
+|---|---|---|---|---|
 | FreshRSS | 自托管 RSS 服务 | [项目 / 文档](https://github.com/FreshRSS/FreshRSS) | 集中读取已订阅来源的更新 | 先部署和订阅；API 读取需单独启用 |
 | SearXNG | 自托管搜索服务 | [项目 / 文档](https://github.com/searxng/searxng) | 聚合公开搜索引擎结果 | 常用 Docker 部署；JSON 输出需启用 |
 
-### 运行与配置支撑
+### 运行与配置
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
@@ -81,9 +85,8 @@ Agent 检查与任务相关的入口，选择需要的工具，并说明已取�
 | Python | CLI 运行环境 | [项目 / 文档](https://www.python.org/) | 运行本地抽取与文档工具 | 建议隔离依赖，避免改坏既有项目 |
 | uv | 环境 / 工具管理 CLI | [项目 / 文档](https://docs.astral.sh/uv/) | 隔离安装和运行 Python 工具 | 管理工具，不直接提供搜索内容 |
 | Docker Desktop | 容器运行环境 | [项目 / 文档](https://docs.docker.com/desktop/) | 运行本地 SearXNG 等容器服务 | 使用容器时 Docker Engine 需运行 |
-| CC Switch | 本地配置管理器 | [项目 / 文档](https://github.com/farion1231/cc-switch) | 集中管理 MCP 等客户端配置 | 可沿用原配置方法；不是搜索服务 |
 
-### 协作衔接
+### 协作工具
 
 | 工具名称 | 工具类型 | 原链接 | 工具作用 | 备注 |
 |---|---|---|---|---|
