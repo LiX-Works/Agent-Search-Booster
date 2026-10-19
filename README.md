@@ -4,9 +4,9 @@
 
 Agent Search Booster is a Skill that gives AI agents the power to search across the web, scrape hard-to-reach pages, and read original content. It brings search engines, real browsers, platform readers, and document tools into one workflow. You describe what you need; the agent chooses the tools and retrieves the material.
 
-- **Scrape full pages. Read more content.** Go beyond snippets to articles, forum posts, comments, and video transcripts. Get past dynamic loading and bot-check pages using a real browser.
+- **Full pages, not snippets.** Go beyond search snippets to articles, forum posts, comments, and video transcripts, and handle dynamic and verification pages with a real browser.
 - **Search far beyond a single engine.** Combine web search, platform search, X discussions, GitHub, and technical documentation to uncover sources and perspectives ordinary search can miss.
-- **Clear routing. Smarter tool use.** Systematic rules guide the agent to the right MCP, browser, or CLI tool for each task—and to a suitable alternative when one route fails. No need to pick tools or remember commands yourself.
+- **Right tool first, fallback when it fails.** Systematic rules send each task to the right MCP, browser, or CLI tool, and switch to a suitable alternative when one route fails.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
@@ -18,9 +18,9 @@ Built mainly for Codex. This README is available in English and Chinese; the Ski
 
 ## Using it
 
-1. Copy the entire `skills/agent-search-booster/` folder into your personal `~/.agents/skills/` directory or the project's `.agents/skills/` directory. Compare existing customizations before replacing it. See the [official Skill guide](https://learn.chatgpt.com/docs/build-skills).
-2. Check the table below for installed, connected, and authenticated tools. Follow the original links for missing components; MCP connection code and essential settings are in [setup notes](skills/agent-search-booster/references/setup.md). You can first ask the agent to check which connections are ready.
-3. Invoke the Skill directly. You do not need to choose a tool or remember commands for each task:
+1. Copy the entire `skills/agent-search-booster/` folder into `~/.agents/skills/` or your project's `.agents/skills/`, comparing any customized rules before replacing it. See the [official Skill guide](https://learn.chatgpt.com/docs/build-skills).
+2. Install or connect the tools you need from the checklist below; MCP connection code and key settings are in the [setup notes](skills/agent-search-booster/references/setup.md). You can ask the agent to check which tools are ready.
+3. Invoke the Skill with your goal:
 
 ```text
 Use $agent-search-booster to find real user experiences with XXX.
@@ -28,71 +28,69 @@ Read original posts, page text, and important comments where possible.
 Add sources from other platforms as useful, then summarize the findings.
 ```
 
-Once the tools are ready, you provide the objective and scope. The detailed invocation guides are for the agent to read as needed.
-
 ## How the agent chooses a route
 
-- **Search and discovery:** combine sources according to the question and the material still needed.
-- **Pages and platforms:** consider OpenCLI or browser reading early for interactive, signed-in, dynamically loaded, or verification pages, including ordinary university and laboratory sites. Authorized access and the site's behavior determine what can be read.
-- **Specialist tasks:** hand academic discovery and official article PDF downloads to the corresponding installed Skills. Reading or converting a PDF already obtained is a separate step.
-- **Retrieval gaps:** distinguish a route not tried, a missing dependency, and an actual reading failure; check the material returned and report its coverage.
+- **Finding sources:** combines search engines, platform search, X, and GitHub according to the question and what is still missing.
+- **Hard-to-read pages:** switches early to a real browser through OpenCLI for pages that need sign-in, load dynamically, or show verification, including university and lab sites.
+- **Papers:** hands literature search and official PDF downloads to dedicated Skills; reading a PDF you already have is a separate step.
+- **Gaps:** reports what it actually retrieved and what is still missing, and tells an untried route apart from a real failure.
 
 ## Tool checklist
 
-This is the complete component list integrated by this setup, for checking readiness. Reuse existing connections; notes identify supplemental routes and supporting components. The agent selects tools for each task, rather than calling all of them every time.
+The complete set of tools this Skill coordinates, for checking what is ready. Reuse connections you already have; the agent picks tools for each task rather than calling them all.
 
 ### MCP & APIs
 
-| Tool | Type | Original link | Purpose | Notes |
-|---|---|---|---|---|
-| Exa | Remote MCP / plugin | [Project / docs](https://exa.ai/docs/get-started/exa-mcp) | Search across sources; retrieve selected pages | Use the existing plugin or direct MCP connection; no duplicate required |
-| Tavily | Remote MCP | [Project / docs](https://github.com/tavily-ai/tavily-mcp) | Web search, filtering, and content extraction | OAuth or service credentials; account limits apply |
-| Firecrawl | Remote MCP | [Project / docs](https://docs.firecrawl.dev/mcp-server) | Scrape, parse, and extract web content | Usage-limited; use an authorized connection |
-| Context7 | Remote MCP | [Project / docs](https://github.com/upstash/context7) | Retrieve library and SDK documentation | HTTP/OAuth in this setup; local transport is also available |
-| Jina Reader | HTTP reader service | [Project / docs](https://jina.ai/reader) | Turn accessible web pages into readable text | Supplemental route; HTTP and MCP are separate connections |
-| Jina MCP | Remote MCP | [Project / docs](https://github.com/jina-ai/MCP) | Expose Reader and related tools through MCP | Alternative connection; verify authentication for each tool |
+| Tool | Type | Purpose | Notes |
+|---|---|---|---|
+| [Exa](https://exa.ai/docs/get-started/exa-mcp) | Remote MCP / plugin | Search across sources; retrieve selected pages | Existing plugin or direct MCP; one is enough |
+| [Tavily](https://github.com/tavily-ai/tavily-mcp) | Remote MCP | Web search, filtering, and content extraction | OAuth or service credentials |
+| [Firecrawl](https://docs.firecrawl.dev/mcp-server) | Remote MCP | Scrape, parse, and extract web content | Usage-limited |
+| [Context7](https://github.com/upstash/context7) | Remote MCP | Library and SDK documentation | HTTP/OAuth here; local transport also available |
+| [Jina Reader](https://jina.ai/reader) | HTTP reader service | Turn web pages into readable text | Supplemental route |
+| [Jina MCP](https://github.com/jina-ai/MCP) | Remote MCP | Reader and related tools through MCP | Alternative to the HTTP reader |
 
 ### CLI & Browser
 
-| Tool | Type | Original link | Purpose | Notes |
-|---|---|---|---|---|
-| OpenCLI | Local CLI | [Project / docs](https://github.com/jackwener/OpenCLI) | Browser reading for ordinary sites and platforms; dynamic and verification pages, posts, comments, transcripts | Generic web/browser routes need Chrome, Bridge, and any required authorized session; access is not guaranteed |
-| Browser Bridge | Chrome extension | [Project / docs](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | Connect OpenCLI to the browser | Install and enable alongside OpenCLI |
-| GitHub CLI | Local CLI | [Project / docs](https://cli.github.com/) | Read repositories, code, issues, PRs, and releases | Command: gh; authentication scope depends on the task |
-| Grok Build | CLI / auxiliary agent | [Project / docs](https://docs.x.ai/build/overview) | Research X posts, threads, and related web sources | Command: grok; sign-in and account allowance required |
-| Agent-Reach | Local CLI / channel management | [Project / docs](https://github.com/Panniantong/Agent-Reach) | Manage and check supporting content channels | Supplemental component; underlying tools perform retrieval |
+| Tool | Type | Purpose | Notes |
+|---|---|---|---|
+| [OpenCLI](https://github.com/jackwener/OpenCLI) | Local CLI | Browser reading for sites and platforms: dynamic and verification pages, posts, comments, transcripts | Needs Chrome, Browser Bridge, and your signed-in sessions |
+| [Browser Bridge](https://chromewebstore.google.com/detail/opencli/ildkmabpimmkaediidaifkhjpohdnifk) | Chrome extension | Connect OpenCLI to the browser | Install alongside OpenCLI |
+| [GitHub CLI](https://cli.github.com/) | Local CLI | Repositories, code, issues, PRs, and releases | Command: `gh` |
+| [Grok Build](https://docs.x.ai/build/overview) | CLI / auxiliary agent | X posts, threads, and related web sources | Command: `grok`; sign-in and allowance required |
+| [Agent-Reach](https://github.com/Panniantong/Agent-Reach) | Local CLI / channel management | Manage and check supporting content channels | Supplemental; underlying tools do the retrieval |
 
 ### Document CLIs
 
-| Tool | Type | Original link | Purpose | Notes |
-|---|---|---|---|---|
-| Trafilatura | Local CLI | [Project / docs](https://github.com/adbar/trafilatura) | Extract article text from HTML or URLs | Best for directly accessible article pages |
-| MarkItDown | Local CLI | [Project / docs](https://github.com/microsoft/markitdown) | Convert Office, CSV, PDF, and other files to Markdown | Install format dependencies; this setup uses the CLI |
-| Docling | Local CLI / local models | [Project / docs](https://github.com/docling-project/docling) | Read PDF layouts, tables, scans, and OCR | Models must be available; check complex output against originals |
+| Tool | Type | Purpose | Notes |
+|---|---|---|---|
+| [Trafilatura](https://github.com/adbar/trafilatura) | Local CLI | Extract article text from HTML or URLs | Best for directly accessible articles |
+| [MarkItDown](https://github.com/microsoft/markitdown) | Local CLI | Convert Office, CSV, PDF, and other files to Markdown | Install format extras as needed |
+| [Docling](https://github.com/docling-project/docling) | Local CLI / local models | PDF layouts, tables, scans, and OCR | Needs its local models |
 
 ### Self-hosted Services
 
-| Tool | Type | Original link | Purpose | Notes |
-|---|---|---|---|---|
-| FreshRSS | Self-hosted RSS service | [Project / docs](https://github.com/FreshRSS/FreshRSS) | Read updates from subscribed sources | Deploy and subscribe first; enable API access if used |
-| SearXNG | Self-hosted search service | [Project / docs](https://github.com/searxng/searxng) | Aggregate public search-engine results | Often deployed with Docker; JSON output must be enabled |
+| Tool | Type | Purpose | Notes |
+|---|---|---|---|
+| [FreshRSS](https://github.com/FreshRSS/FreshRSS) | Self-hosted RSS service | Updates from subscribed sources | Enable API access if used |
+| [SearXNG](https://github.com/searxng/searxng) | Self-hosted search service | Aggregated public search-engine results | Usually Docker; enable JSON output |
 
 ### Runtime & Setup
 
-| Tool | Type | Original link | Purpose | Notes |
-|---|---|---|---|---|
-| Chrome | Browser | [Project / docs](https://www.google.com/chrome/) | Host Bridge and existing site sessions | Use the user's authorized browser profile |
-| Node.js | CLI runtime | [Project / docs](https://nodejs.org/) | Run npm-installed tools such as OpenCLI | Match each tool's runtime requirements |
-| Python | CLI runtime | [Project / docs](https://www.python.org/) | Run local extraction and document tools | Isolate dependencies from existing projects |
-| uv | Environment / tool management CLI | [Project / docs](https://docs.astral.sh/uv/) | Install and run Python tools in isolated environments | Supports tools; does not itself retrieve content |
-| Docker Desktop | Container runtime | [Project / docs](https://docs.docker.com/desktop/) | Run containerized services such as SearXNG | The Docker Engine must be running |
+| Tool | Type | Purpose | Notes |
+|---|---|---|---|
+| [Chrome](https://www.google.com/chrome/) | Browser | Host Browser Bridge and your site sessions | Your own browser profile |
+| [Node.js](https://nodejs.org/) | CLI runtime | Run npm-installed tools such as OpenCLI | Match each tool's version requirements |
+| [Python](https://www.python.org/) | CLI runtime | Run extraction and document tools | Keep dependencies isolated |
+| [uv](https://docs.astral.sh/uv/) | Environment / tool management CLI | Install and run Python tools in isolated environments | Supporting tool only |
+| [Docker Desktop](https://docs.docker.com/desktop/) | Container runtime | Run containerized services such as SearXNG | Docker Engine must be running |
 
 ### Collaboration
 
-| Tool | Type | Original link | Purpose | Notes |
-|---|---|---|---|---|
-| AGY / Gemini | CLI / auxiliary agent | [Project / docs](https://www.antigravity.google/docs/cli/overview) | Video and related frame analysis | Follow subagent-manager's specialist rules; other roles require an explicit user request |
-| subagent-manager | Companion Skill | [Project / docs](https://github.com/LiX-Works/subagent-manager) | Manage delegated models, handoffs, and Grok usage | Optional coordination rules; search can run independently |
+| Tool | Type | Purpose | Notes |
+|---|---|---|---|
+| [AGY / Gemini](https://www.antigravity.google/docs/cli/overview) | CLI / auxiliary agent | Video and related frame analysis | Used under Subagent-Manager's specialist rules |
+| [Subagent-Manager](https://github.com/LiX-Works/Subagent-Manager) | Companion Skill | Delegated models, handoffs, and Grok usage | Optional; search works without it |
 
 ## Agent invocation guides
 
@@ -105,6 +103,4 @@ This is the complete component list integrated by this setup, for checking readi
 | [Local documents and services](skills/agent-search-booster/references/local-tools.md) | Document conversion, OCR, RSS, and SearXNG |
 | [Tool catalog](skills/agent-search-booster/references/tool-catalog.md) and [setup notes](skills/agent-search-booster/references/setup.md) | Dependency checks, MCP code, and connection checks |
 
-The Skill unifies invocation methods; external programs, services, and accounts must still be available. Access, authentication, and pagination affect what can be retrieved, and the agent reports gaps. Use only authorized free or subscription-included allowances.
-
-Released under the [MIT license](LICENSE). Published versions are listed in [Releases](https://github.com/LiX-Works/agent-search-booster/releases).
+Tools, services, and accounts are set up separately and used within your authorized allowances; the agent reports anything it could not reach. Released under the [MIT license](LICENSE).
