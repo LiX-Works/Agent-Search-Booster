@@ -1,4 +1,4 @@
-// Run with a local installation of sharp: node assets/source/render.mjs
+// Run with a local installation of sharp: node docs/assets/source/render.mjs
 import sharp from 'sharp';
 import { fileURLToPath } from 'node:url';
 

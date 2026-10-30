@@ -1,3 +1,9 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/search-booster-overview.png">
+  <img src="assets/search-booster-overview.png" alt="AI Agent connects through search, platform, web-text, code-documentation, and document tools to representative sources." width="1600">
+</picture>
+
 # agent-search-booster
 
 **English** | [简体中文](README.zh-CN.md)
@@ -8,18 +14,12 @@ Agent Search Booster is a Skill that gives AI agents the power to search across 
 - **Search far beyond a single engine.** Combine web search, platform search, X discussions, GitHub, and technical documentation to uncover sources and perspectives ordinary search can miss.
 - **Right tool first, fallback when it fails.** Systematic rules send each task to the right MCP, browser, or CLI tool, and switch to a suitable alternative when one route fails.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="assets/search-booster-overview.png">
-  <img src="assets/search-booster-overview.png" alt="AI Agent connects through search, platform, web-text, code-documentation, and document tools to representative sources." width="1600">
-</picture>
-
 Built mainly for Codex. This README is available in English and Chinese; the Skill and its invocation guides are in English. The agent replies in your preferred language.
 
 ## Using it
 
 1. Copy the entire `skills/agent-search-booster/` folder into `~/.agents/skills/` or your project's `.agents/skills/`, comparing any customized rules before replacing it. See the [official Skill guide](https://learn.chatgpt.com/docs/build-skills).
-2. Install or connect the tools you need from the checklist below; MCP connection code and key settings are in the [setup notes](skills/agent-search-booster/references/setup.md). You can ask the agent to check which tools are ready.
+2. Install or connect the tools you need from the checklist below; MCP connection code and key settings are in the [setup notes](../skills/agent-search-booster/references/setup.md). You can ask the agent to check which tools are ready.
 3. Invoke the Skill with your goal:
 
 ```text
@@ -96,11 +96,11 @@ The complete set of tools this Skill coordinates, for checking what is ready. Re
 
 | File | What it contains |
 |---|---|
-| [Skill entry](skills/agent-search-booster/SKILL.md) | Task routing, tool roles, retrieval, and delivery |
-| [Web and MCP](skills/agent-search-booster/references/web-tools.md) | Search, page reading, Context7, and GitHub |
-| [Platform readers](skills/agent-search-booster/references/platforms.md) | OpenCLI, browser connections, posts, comments, and transcripts |
-| [Grok](skills/agent-search-booster/references/grok.md) | X posts, threads, and deeper queries |
-| [Local documents and services](skills/agent-search-booster/references/local-tools.md) | Document conversion, OCR, RSS, and SearXNG |
-| [Tool catalog](skills/agent-search-booster/references/tool-catalog.md) and [setup notes](skills/agent-search-booster/references/setup.md) | Dependency checks, MCP code, and connection checks |
+| [Skill entry](../skills/agent-search-booster/SKILL.md) | Task routing, tool roles, retrieval, and delivery |
+| [Web and MCP](../skills/agent-search-booster/references/web-tools.md) | Search, page reading, Context7, and GitHub |
+| [Platform readers](../skills/agent-search-booster/references/platforms.md) | OpenCLI, browser connections, posts, comments, and transcripts |
+| [Grok](../skills/agent-search-booster/references/grok.md) | X posts, threads, and deeper queries |
+| [Local documents and services](../skills/agent-search-booster/references/local-tools.md) | Document conversion, OCR, RSS, and SearXNG |
+| [Tool catalog](../skills/agent-search-booster/references/tool-catalog.md) and [setup notes](../skills/agent-search-booster/references/setup.md) | Dependency checks, MCP code, and connection checks |
 
-Tools, services, and accounts are set up separately and used within your authorized allowances; the agent reports anything it could not reach. Released under the [MIT license](LICENSE).
+Tools, services, and accounts are set up separately and used within your authorized allowances; the agent reports anything it could not reach. Released under the [MIT license](../LICENSE).

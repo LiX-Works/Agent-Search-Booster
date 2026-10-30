@@ -1,3 +1,9 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/search-booster-overview.png">
+  <img src="assets/search-booster-overview.png" alt="AI Agent 通过搜索、平台读取、网页正文、代码文档及本地文档工具连接不同来源。" width="1600">
+</picture>
+
 # agent-search-booster
 
 [English](README.md) | **简体中文**
@@ -8,18 +14,12 @@ Agent Search Booster 是一个大幅增强 AI Agent 网络搜索、网页抓取�
 - **远超单一搜索引擎的覆盖。** 结合网页搜索、平台站内搜索、X 讨论、GitHub 和技术文档，找到普通搜索容易遗漏的来源与观点。
 - **先选对工具，失败自动换路。** 系统的规则把每项任务交给合适的 MCP、浏览器或 CLI 工具，一条路线失败就切换合适的替代入口。
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/search-booster-overview-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="assets/search-booster-overview.png">
-  <img src="assets/search-booster-overview.png" alt="AI Agent 通过搜索、平台读取、网页正文、代码文档及本地文档工具连接不同来源。" width="1600">
-</picture>
-
 目前主要面向 Codex。首页提供中英双语，Skill 及调用说明使用英文；Agent 仍按你的语言偏好回复。
 
 ## 怎么用
 
 1. 将 `skills/agent-search-booster/` 整个文件夹放入个人 `~/.agents/skills/` 或项目 `.agents/skills/`；已有同名目录先比较个人改动。[官方 Skill 说明](https://learn.chatgpt.com/docs/build-skills)
-2. 按下方清单安装或接通需要的工具；MCP 连接代码和必要设置见[配置要点](skills/agent-search-booster/references/setup.md)。可以先让 Agent 检查哪些工具已经可用。
+2. 按下方清单安装或接通需要的工具；MCP 连接代码和必要设置见[配置要点](../skills/agent-search-booster/references/setup.md)。可以先让 Agent 检查哪些工具已经可用。
 3. 说明目标，直接调用 Skill：
 
 ```text
@@ -95,11 +95,11 @@ Agent Search Booster 是一个大幅增强 AI Agent 网络搜索、网页抓取�
 
 | 文件 | 提供什么 |
 |---|---|
-| [Skill 入口](skills/agent-search-booster/SKILL.md) | 任务识别、工具分工、内容获取和交付 |
-| [网页与 MCP](skills/agent-search-booster/references/web-tools.md) | 搜索补充、正文读取、Context7 和 GitHub 调用 |
-| [平台读取](skills/agent-search-booster/references/platforms.md) | OpenCLI、浏览器桥、帖子、评论与字幕 |
-| [Grok](skills/agent-search-booster/references/grok.md) | X 原帖、线程和深入查询 |
-| [本地材料与服务](skills/agent-search-booster/references/local-tools.md) | 文档转换、OCR、RSS 与 SearXNG |
-| [工具清单](skills/agent-search-booster/references/tool-catalog.md)与[配置要点](skills/agent-search-booster/references/setup.md) | 安装对照、MCP 代码与接通检查 |
+| [Skill 入口](../skills/agent-search-booster/SKILL.md) | 任务识别、工具分工、内容获取和交付 |
+| [网页与 MCP](../skills/agent-search-booster/references/web-tools.md) | 搜索补充、正文读取、Context7 和 GitHub 调用 |
+| [平台读取](../skills/agent-search-booster/references/platforms.md) | OpenCLI、浏览器桥、帖子、评论与字幕 |
+| [Grok](../skills/agent-search-booster/references/grok.md) | X 原帖、线程和深入查询 |
+| [本地材料与服务](../skills/agent-search-booster/references/local-tools.md) | 文档转换、OCR、RSS 与 SearXNG |
+| [工具清单](../skills/agent-search-booster/references/tool-catalog.md)与[配置要点](../skills/agent-search-booster/references/setup.md) | 安装对照、MCP 代码与接通检查 |
 
-工具、服务和账户需要单独准备，并在已授权的额度内使用；Agent 会说明没能取得的部分。采用 [MIT 许可证](LICENSE)。
+工具、服务和账户需要单独准备，并在已授权的额度内使用；Agent 会说明没能取得的部分。采用 [MIT 许可证](../LICENSE)。
